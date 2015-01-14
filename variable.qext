@@ -1,0 +1,7 @@
+{
+    "name": "Variable",
+    "description": "Set a variable",
+    "type": "visualization",
+    "version": 1.0,
+    "author": "Erik Wetterberg"
+}
