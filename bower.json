@@ -1,0 +1,14 @@
+{
+    "name": "qsVariable",
+    "version": "1.1.0",
+    "description": "Qlik Sense Variable extension",
+    "author": "Erik Wetterberg",
+    "license": "MIT",
+    "main": "variable.js",
+    "keywords": [
+        "qlik-sense, chart, visualization"
+    ],
+    "dependencies": {
+        "qlik-sense": ">=1.1.x"
+    }
+}
