@@ -84,7 +84,8 @@ define( ["qlik"], function ( qlik ) {
 										label: {
 											type: "string",
 											ref: "label",
-											label: "Label"
+											label: "Label",
+											expression: "optional"
 										}
 									}
 								}
