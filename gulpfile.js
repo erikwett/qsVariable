@@ -25,9 +25,9 @@ gulp.task('requirejs', function(ready) {
         include: [NAME],
         exclude: ['qlik'],
         // optimize : 'uglify',
-        out: TMP+ '/'+NAME+'.js'
+        out: TMP + '/' + NAME + '.js'
     }, function() {
-        gulp.src(TMP+ '/'+NAME+'.js').
+        gulp.src(TMP + '/' + NAME + '.js').
         pipe(replace('define("' + NAME + '",', 'define(')).
         pipe(gulp.dest(DIST));
         ready();
@@ -42,7 +42,7 @@ gulp.task('qext', function() {
 });
 
 gulp.task('less', function() {
-    return gulp.src( SRC + '/**/*.less')
+    return gulp.src(SRC + '/**/*.less')
         .pipe(less({
             plugins: [autoprefix]
         }))
@@ -62,14 +62,14 @@ gulp.task('clean', function(ready) {
     ready();
 });
 
-gulp.task('zip-build', function() {
+gulp.task('zip-build', ['qext', 'less', 'css', 'requirejs'], function() {
     return gulp.src(DIST + '/**/*')
-        .pipe(zip(NAME+'.zip'))
+        .pipe(zip(NAME + '.zip'))
         .pipe(gulp.dest(DIST));
 });
 
 gulp.task('build', function() {
-    runSequence('clean', ['qext', 'less', 'css', 'requirejs'],
+    runSequence('clean',
         'zip-build'
     );
 });
