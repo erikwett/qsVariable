@@ -23,3 +23,8 @@ Styling inspired by Twitter Bootstrap
 ##Material
 Styling inspired by Google Material design
 ![](qsVariableM.png)
+
+##Installation
+Qlik Sense Desktop: copy the dist directory to a directory under [My Documents]/Qlik/Sense/Extensions, for example variable.
+
+Qlik Sense server: import the zip file dist\variable.zip in the QMC.
