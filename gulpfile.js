@@ -1,22 +1,17 @@
 var gulp = require('gulp');
 var del = require('del');
-var replace = require('gulp-replace');
-var zip = require('gulp-zip');
-var less = require('gulp-less');
 var cssnano = require('gulp-cssnano');
 var runSequence = require('run-sequence');
-var requirejs = require('requirejs');
 
-var LessPluginAutoPrefix = require('less-plugin-autoprefix');
-var autoprefix = new LessPluginAutoPrefix({
-    browsers: ["last 2 versions"]
-});
 var DIST = './dist',
     SRC = './src',
     TMP = './tmp',
-    NAME = 'variable';
+    NAME = 'variable',
+    DEPLOY = process.env.HOMEDRIVE + process.env.HOMEPATH + '/Documents/Qlik/Sense/Extensions/' + NAME;
 
 gulp.task('requirejs', function(ready) {
+    var requirejs = require('requirejs');
+    var replace = require('gulp-replace');
     requirejs.optimize({
         baseUrl: SRC,
         paths: {
@@ -42,6 +37,11 @@ gulp.task('qext', function() {
 });
 
 gulp.task('less', function() {
+    var less = require('gulp-less');
+    var LessPluginAutoPrefix = require('less-plugin-autoprefix');
+    var autoprefix = new LessPluginAutoPrefix({
+        browsers: ["last 2 versions"]
+    });
     return gulp.src(SRC + '/**/*.less')
         .pipe(less({
             plugins: [autoprefix]
@@ -63,15 +63,22 @@ gulp.task('clean', function(ready) {
 });
 
 gulp.task('zip-build', ['qext', 'less', 'css', 'requirejs'], function() {
+    var zip = require('gulp-zip');
     return gulp.src(DIST + '/**/*')
         .pipe(zip(NAME + '.zip'))
         .pipe(gulp.dest(DIST));
 });
 
 gulp.task('build', function() {
-    runSequence('clean',
+    return runSequence('clean',
         'zip-build'
     );
+});
+
+gulp.task('debug', ['less'], function() {
+    return gulp.src([SRC + '/**/*.qext', SRC + '/**/*.js', DIST + '/**/*.css'])
+        .pipe(gulp.dest(DEPLOY));
+
 });
 
 gulp.task('default', ['build']);
