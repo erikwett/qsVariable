@@ -10,4 +10,16 @@ Four different ways to render:
 
 The variable will be auto-created when you enter the name in the property panel.
 
+Three different styles to choose from:
+## Qlik
+Styled like toolbar and property panel in Qlik Sense
+
 ![](qsVariable.png)
+## Bootstrap
+Styling inspired by Twitter Bootstrap
+
+![](qsVariableB.png)
+
+##Material
+Styling inspired by Google Material design
+![](qsVariableM.png)
