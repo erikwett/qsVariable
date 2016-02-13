@@ -1,11 +1,13 @@
 var gulp = require('gulp');
 var cssnano = require('gulp-cssnano');
 var runSequence = require('run-sequence');
+var gutil = require('gulp-util');
+var pkg = require('./package.json');
 
 var DIST = './dist',
     SRC = './src',
     TMP = './tmp',
-    NAME = 'variable',
+    NAME = pkg.name,
     DEPLOY = process.env.HOMEDRIVE + process.env.HOMEPATH + '/Documents/Qlik/Sense/Extensions/' + NAME;
 
 gulp.task('requirejs', function (ready) {
@@ -34,8 +36,20 @@ gulp.task('requirejs', function (ready) {
     });
 });
 gulp.task('qext', function () {
-    return gulp.src(SRC + '/*.qext')
-        .pipe(gulp.dest(DIST));
+    var qext = {
+        name:pkg.name, 
+        description: pkg.description,
+        version: pkg.version, 
+        type: 'visualization',
+        author: pkg.author,
+    };
+    var src = require('stream').Readable({ objectMode: true })
+    src._read = function () {
+        this.push(new gutil.File({ cwd: "", base: "", path: NAME+'.qext', 
+                                  contents: new Buffer(JSON.stringify(qext,null,4)) }));
+        this.push(null);
+    }
+    return src.pipe(gulp.dest(DIST));
 });
 
 gulp.task('less', function () {
@@ -78,8 +92,8 @@ gulp.task('build', function () {
     );
 });
 
-gulp.task('debug', ['less'], function () {
-    return gulp.src([SRC + '/**/*.qext', SRC + '/**/*.js', DIST + '/**/*.css'])
+gulp.task('debug', ['less','qext'], function () {
+    return gulp.src([DIST + '/**/*.qext', SRC + '/**/*.js', DIST + '/**/*.css'])
         .pipe(gulp.dest(DEPLOY));
 
 });
