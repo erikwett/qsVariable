@@ -1,7 +1,7 @@
 {
-  "name": "qsVariable",
+  "name": "variable",
   "version": "2.2.0",
-  "description": "Qlik Sense Variable extension",
+  "description": "Variable extension",
   "keywords": "qliksense extension",
   "main": "variable.js",
   "private": true,
