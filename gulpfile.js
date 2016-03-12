@@ -7,26 +7,27 @@ var pkg = require('./package.json');
 var DIST = './dist',
     SRC = './src',
     TMP = './tmp',
+    MAIN = pkg.main.substring(0,pkg.main.indexOf('.')), 
     NAME = pkg.name,
     DEPLOY = process.env.HOMEDRIVE + process.env.HOMEPATH + '/Documents/Qlik/Sense/Extensions/' + NAME;
 
 gulp.task('requirejs', function (ready) {
     var requirejs = require('requirejs');
     var replace = require('gulp-replace');
-    var DIRNAME = "extensions/" + NAME + "/";
+    var DIRNAME = "extensions/" + MAIN + "/";
     requirejs.optimize({
         baseUrl: SRC,
         paths: {
             "qlik": "empty:"
         },
-        include: [NAME],
+        include: [MAIN],
         exclude: ['qlik'],
         // optimize : 'uglify',
         findNestedDependencies: true,
-        out: TMP + '/' + NAME + '.js'
+        out: TMP + '/' + MAIN + '.js'
     }, function () {
-        gulp.src(TMP + '/' + NAME + '.js').
-        pipe(replace('define("' + NAME + '",', 'define(')).
+        gulp.src(TMP + '/' + MAIN + '.js').
+        pipe(replace('define("' + MAIN + '",', 'define(')).
         pipe(replace('define("', 'define("'+DIRNAME)).
         pipe(gulp.dest(DIST));
         ready();
@@ -45,7 +46,7 @@ gulp.task('qext', function () {
     };
     var src = require('stream').Readable({ objectMode: true })
     src._read = function () {
-        this.push(new gutil.File({ cwd: "", base: "", path: NAME+'.qext', 
+        this.push(new gutil.File({ cwd: "", base: "", path: MAIN+'.qext', 
                                   contents: new Buffer(JSON.stringify(qext,null,4)) }));
         this.push(null);
     }
