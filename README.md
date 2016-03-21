@@ -25,6 +25,8 @@ Styling inspired by Google Material design
 ![](qsVariableM.png)
 
 ##Installation
-Qlik Sense Desktop: copy the dist directory to a directory under [My Documents]/Qlik/Sense/Extensions, for example variable.
+Download distribution zip file from here: https://github.com/erikwett/qsVariable/raw/master/dist/variable.zip
 
-Qlik Sense server: import the zip file dist\variable.zip in the QMC.
+Qlik Sense Desktop: unzip to a directory under [My Documents]/Qlik/Sense/Extensions, for example variable.
+
+Qlik Sense server: import the zip file in the QMC.
