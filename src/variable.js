@@ -17,11 +17,11 @@ define(["qlik", "./util", "./properties"], function (qlik, util, prop) {
             default:
                 switch (type) {
                     case 'button':
-                        return selected ? 'qui-button-selected' : 'qui-button';
+                        return selected ? 'qui-button-selected lui-button lui-button--success' : 'qui-button lui-button';
                     case 'select':
-                        return 'qui-select';
+                        return 'qui-select lui-select';
                     case 'input':
-                        return 'qui-input';
+                        return 'qui-input lui-input';
                 }
         }
     }

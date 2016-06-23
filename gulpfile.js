@@ -99,4 +99,9 @@ gulp.task('debug', ['less','qext'], function () {
 
 });
 
+gulp.task('deploy', ['less','qext','css', 'requirejs'], function () {
+    return gulp.src([DIST + '/**/*.qext', DIST + '/**/*.js', DIST + '/**/*.css'])
+        .pipe(gulp.dest(DEPLOY));
+});
+
 gulp.task('default', ['build']);
