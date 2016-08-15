@@ -1,5 +1,5 @@
 /*global define*/
-define(["./util"], function (util) {
+define(["./util"], function(util) {
     'use strict';
     return {
 
@@ -30,7 +30,7 @@ define(["./util"], function (util) {
                                     ref: "variableName",
                                     label: "Name",
                                     type: "string",
-                                    change: function (data) {
+                                    change: function(data) {
                                         util.createVariable(data.variableName);
                                         data.variableValue = data.variableValue || {};
                                         data.variableValue.qStringExpression = '=' + data.variableName;
@@ -73,7 +73,7 @@ define(["./util"], function (util) {
                                     ref: "customwidth",
                                     label: "Custom width",
                                     expression: "optional",
-                                    show: function (data) {
+                                    show: function(data) {
                                         return data.width === "custom";
                                     }
                                 },
@@ -119,7 +119,7 @@ define(["./util"], function (util) {
                                             expression: "optional"
                                         }
                                     },
-                                    show: function (data) {
+                                    show: function(data) {
                                         return data.render === "b" || data.render === "s";
                                     }
                                 },
@@ -128,7 +128,8 @@ define(["./util"], function (util) {
                                     label: "Min",
                                     type: "number",
                                     defaultValue: 0,
-                                    show: function (data) {
+                                    expression: "optional",
+                                    show: function(data) {
                                         return data.render === "l";
                                     }
                                 },
@@ -137,7 +138,8 @@ define(["./util"], function (util) {
                                     label: "Max",
                                     type: "number",
                                     defaultValue: 100,
-                                    show: function (data) {
+                                    expression: "optional",
+                                    show: function(data) {
                                         return data.render === "l";
                                     }
                                 },
@@ -146,7 +148,8 @@ define(["./util"], function (util) {
                                     label: "Step",
                                     type: "number",
                                     defaultValue: 1,
-                                    show: function (data) {
+                                    expression: "optional",
+                                    show: function(data) {
                                         return data.render === "l";
                                     }
                                 },
@@ -155,7 +158,7 @@ define(["./util"], function (util) {
                                     label: "Slider label",
                                     type: "boolean",
                                     defaultValue: false,
-                                    show: function (data) {
+                                    show: function(data) {
                                         return data.render === "l";
                                     }
                                 }
