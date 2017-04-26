@@ -8,7 +8,8 @@ Four different ways to render:
 - Field: an input field, no validation, anything can be entered
 - Slider: a HTML slider, you can define min (default 0), max (default 100) and step (default 1)
 
-The variable will be auto-created when you enter the name in the property panel.
+## Qlik Sense 3.2 SR3 Issue:
+If you encounter problems with the extension after upgrading to Qlik Sense 3.2 SR3, please download the latest version of the extension and install. That should solve your problems. If you use the extension in a mashup with more than one app, this version might not work as expected.
 
 Three different styles to choose from:
 ## Qlik
@@ -20,11 +21,11 @@ Styling inspired by Twitter Bootstrap
 
 ![](qsVariableB.png)
 
-##Material
+## Material
 Styling inspired by Google Material design
 ![](qsVariableM.png)
 
-##Installation
+## Installation
 Download distribution zip file from here: https://github.com/erikwett/qsVariable/raw/master/dist/variable.zip
 
 Qlik Sense Desktop: unzip to a directory under [My Documents]/Qlik/Sense/Extensions, for example variable.
