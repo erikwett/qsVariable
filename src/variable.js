@@ -54,7 +54,7 @@ define(["qlik", "./util", "./properties"], function (qlik, util, prop) {
                     var btn = util.createElement('button', getClass(layout.style, 'button',
                         alt.value === layout.variableValue), alt.label);
                     btn.onclick = function () {
-                        qlik.currApp().variable.setContent(layout.variableName, alt.value);
+                        qlik.currApp(ext).variable.setContent(layout.variableName, alt.value);
                     };
                     btn.style.width = width;
                     wrapper.appendChild(btn);
@@ -69,7 +69,7 @@ define(["qlik", "./util", "./properties"], function (qlik, util, prop) {
                     sel.appendChild(opt);
                 });
                 sel.onchange = function () {
-                    qlik.currApp().variable.setContent(layout.variableName, this.value);
+                    qlik.currApp(ext).variable.setContent(layout.variableName, this.value);
                 };
                 wrapper.appendChild(sel);
             } else if (layout.render === 'l') {
@@ -88,7 +88,7 @@ define(["qlik", "./util", "./properties"], function (qlik, util, prop) {
                     } else {
                         this.title = this.value;
                     }
-                    qlik.currApp().variable.setContent(layout.variableName, this.value);
+                    qlik.currApp(ext).variable.setContent(layout.variableName, this.value);
                 };
                 range.oninput = function () {
                     if (this.label) {
@@ -114,7 +114,7 @@ define(["qlik", "./util", "./properties"], function (qlik, util, prop) {
                 fld.type = 'text';
                 fld.value = layout.variableValue;
                 fld.onchange = function () {
-                    qlik.currApp().variable.setContent(layout.variableName, this.value);
+                    qlik.currApp(ext).variable.setContent(layout.variableName, this.value);
                 };
                 wrapper.appendChild(fld);
             }
