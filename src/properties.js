@@ -115,6 +115,15 @@ define(["./util", "qlik"], function (util, qlik) {
 									}],
 									defaultValue: "f"
 								},
+								vert: {
+									type: "boolean",
+									label: "Vertical",
+									ref: "vert",
+									defaultValue: false,
+									show: function (data) {
+										return data.render === "l";
+									}
+								},
 								alternatives: {
 									type: "array",
 									ref: "alternatives",

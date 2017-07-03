@@ -5,6 +5,9 @@
     .icon-zoom-in {
         display: none;
     }
+	.qv-object-title {
+    	padding-right: 0;
+	}
     div.qlik,
     div.bootstrap,
     div.material {
@@ -49,8 +52,20 @@
             background: transparent;
             border-color: transparent;
             color: transparent;
-        }
+        }		
     }
+	.vert {
+		input[type=range] {
+   			transform: rotate(270deg);
+			top: 40%;
+		}
+		.labelwrap {
+			top: 0;
+        	right: 25px;
+        	height: ~"calc(98% - 30px)";
+			width: 10px;
+    	}
+	}
     .qlik {
         .trackQ() {
             position: relative;
