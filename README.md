@@ -8,8 +8,19 @@ Four different ways to render:
 - Field: an input field, no validation, anything can be entered
 - Slider: a HTML slider, you can define min (default 0), max (default 100) and step (default 1)
 
-## Qlik Sense 3.2 SR3 Issue:
-If you encounter problems with the extension after upgrading to Qlik Sense 3.2 SR3, please download the latest version of the extension and install. That should solve your problems. If you use the extension in a mashup with more than one app, this version might not work as expected.
+## News in Version 3
+The extension is now upgraded for Qlik Sense June 2017. This version will probably not work for Qlik Sense 3.2 SR3 and SR4, so you will need to use the previous version, see below.
+
+News in short:
+- Auto-create of variable removed, create your variable in the script or in the variable dialog, both methods also allows you to set initial value
+- Vertical sliders are now available
+- workaround for Qlik Sense 3.2 SR3 and SR4 has been removed, so extension works in a multi-app mashup again
+
+## Qlik Sense 3.2 SR3/SR4 Issue:
+If you encounter problems with the extension in Qlik Sense 3.2 SR3 or SR4, this is probably because of a known bug with the Qlik Sense API. Please upgrade to Qlik Sense June 2017 or contact Qlik Support for a patch. If this is not possible, you can use the previous version of the extension. Download it from here:
+https://github.com/erikwett/qsVariable/blob/Version2.3.1/dist/variable.zip
+
+If you use the extension in a mashup with more than one app, this version might not work as expected.
 
 Three different styles to choose from:
 ## Qlik
@@ -24,6 +35,10 @@ Styling inspired by Twitter Bootstrap
 ## Material
 Styling inspired by Google Material design
 ![](qsVariableM.png)
+
+## Vertical slider
+You can now also have vertical orientation for your slider
+![](vertSlider.png)
 
 ## Installation
 Download distribution zip file from here: https://github.com/erikwett/qsVariable/raw/master/dist/variable.zip
