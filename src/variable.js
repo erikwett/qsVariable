@@ -113,11 +113,8 @@ define(["qlik", "./util", "./properties"], function (qlik, util, prop) {
 				if (layout.rangelabel) {
 					var labelwrap = util.createElement('div', 'labelwrap');
 					range.label = util.createElement('div', 'rangelabel', layout.variableValue);
-					//range.label.style.left = calcPercent(range) + "%";
 					labelwrap.appendChild(range.label);
 					wrapper.appendChild(labelwrap);
-					//} else {
-					//	range.title = layout.variableValue;
 				}
 				setLabel(range, layout.vert);
 			} else {
