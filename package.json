@@ -1,8 +1,8 @@
 {
   "name": "Variable",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Variable extension",
-  "keywords": "qliksense extension",
+  "keywords": ["qliksense extension"],
   "main": "variable.js",
   "private": true,
   "homepage": "https://github.com/erikwett/qsVariable",
