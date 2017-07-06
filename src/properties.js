@@ -52,7 +52,11 @@ define(["./util", "qlik"], function (util, qlik) {
 									component: 'dropdown',
 									options: function () {
 										return variableListPromise;
-									}
+									},
+									change: function(data) {
+                                    	data.variableValue = data.variableValue || {};
+                                    	data.variableValue.qStringExpression = '=' + data.variableName;
+                                    }
 								},
 								style: {
 									type: "string",
