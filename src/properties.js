@@ -55,7 +55,7 @@ define(["./util", "qlik"], function (util, qlik) {
 									},
 									change: function(data) {
                                     	data.variableValue = data.variableValue || {};
-                                    	data.variableValue.qStringExpression = '=' + data.variableName;
+                                    	data.variableValue.qStringExpression = '="' + data.variableName+'"';
                                     }
 								},
 								style: {
