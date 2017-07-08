@@ -11,15 +11,16 @@ define(["./util", "qlik"], function (util, qlik) {
 			}
 		}
 	};
-	var variableListPromise = qlik.currApp().createGenericObject(variableListDef).then(function (reply) {
-		return reply.layout.qVariableList.qItems.map(function (item) {
-			return {
-				value: item.qName,
-				label: item.qName
-			};
+	var variableList, variableListPromise = qlik.currApp().createGenericObject(variableListDef,
+		function (reply) {
+			variableList = reply.qVariableList.qItems.map(function (item) {
+				return {
+					value: item.qName,
+					label: item.qName
+				};
+			});
+			return variableList;
 		});
-
-	});
 	return {
 
 		initialProperties: {
@@ -51,12 +52,12 @@ define(["./util", "qlik"], function (util, qlik) {
 									type: "string",
 									component: 'dropdown',
 									options: function () {
-										return variableListPromise;
+										return variableList || variableListPromise;
 									},
-									change: function(data) {
-                                    	data.variableValue = data.variableValue || {};
-                                    	data.variableValue.qStringExpression = '="' + data.variableName+'"';
-                                    }
+									change: function (data) {
+										data.variableValue = data.variableValue || {};
+										data.variableValue.qStringExpression = '="' + data.variableName + '"';
+									}
 								},
 								style: {
 									type: "string",
