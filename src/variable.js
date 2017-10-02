@@ -53,7 +53,15 @@ define(['qlik', './util', './properties'], function (qlik, util, prop) {
 			slider.title = slider.value;
 		}
 	}
-
+	function getAlternatives(text) {
+		return text.split('|').map(function (item) {
+			var arr = item.split('~');
+			return {
+				value: arr[0],
+				label: arr.length > 1 ? arr[1] : arr[0]
+			};
+		});
+	}
 	util.addStyleSheet('extensions/variable/variable.css');
 	return {
 		initialProperties: prop.initialProperties,
@@ -61,12 +69,13 @@ define(['qlik', './util', './properties'], function (qlik, util, prop) {
 		paint: function ($element, layout) {
 			var wrapper = util.createElement('div', layout.style || 'qlik'),
 				width = getWidth(layout),
+				alternatives = layout.valueType === 'd' ? getAlternatives(layout.dynamicvalues) : layout.alternatives,
 				ext = this;
 			if (layout.vert) {
 				wrapper.classList.add('vert');
 			}
 			if (layout.render === 'b') {
-				layout.alternatives.forEach(function (alt) {
+				alternatives.forEach(function (alt) {
 					var btn = util.createElement('button', getClass(layout.style, 'button',
 						alt.value === layout.variableValue), alt.label);
 					btn.onclick = function () {
@@ -78,7 +87,7 @@ define(['qlik', './util', './properties'], function (qlik, util, prop) {
 			} else if (layout.render === 's') {
 				var sel = util.createElement('select', getClass(layout.style, 'select'));
 				sel.style.width = width;
-				layout.alternatives.forEach(function (alt) {
+				alternatives.forEach(function (alt) {
 					var opt = util.createElement('option', undefined, alt.label);
 					opt.value = alt.value;
 					opt.selected = alt.value === layout.variableValue;

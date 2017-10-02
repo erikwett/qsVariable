@@ -159,7 +159,7 @@ define(['./util', 'qlik'], function (util, qlik) {
 								},
 								dynamicvalues: {
 									type: 'string',
-									ref: 'customwidth',
+									ref: 'dynamicvalues',
 									label: 'Dynamic values',
 									expression: 'optional',
 									show: function (data) {
