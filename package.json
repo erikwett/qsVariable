@@ -8,6 +8,7 @@
   "homepage": "https://github.com/erikwett/qsVariable",
   "bugs": "https://github.com/erikwett/qsVariable/issues",
   "author": "Erik Wetterberg upper88.com",
+  "contributors": ["Brett Farley contextbi.com"],  
   "license": "MIT",
   "repository": "https://github.com/erikwett/qsVariable",
   "devDependencies": {
