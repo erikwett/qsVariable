@@ -27,7 +27,9 @@ define(['./util', 'qlik'], function (util, qlik) {
 			variableValue: {},
 			variableName: '',
 			render: 'f',
+			valueType: 'x',
 			alternatives: [],
+			dynamicvalues: '',
 			min: 0,
 			max: 100,
 			step: 1,
@@ -58,6 +60,26 @@ define(['./util', 'qlik'], function (util, qlik) {
 										data.variableValue = data.variableValue || {};
 										data.variableValue.qStringExpression = '="' + data.variableName + '"';
 									}
+								},
+								render: {
+									type: 'string',
+									component: 'dropdown',
+									label: 'Show as',
+									ref: 'render',
+									options: [{
+										value: 'b',
+										label: 'Buttons'
+									}, {
+										value: 's',
+										label: 'Drop down'
+									}, {
+										value: 'f',
+										label: 'Input Field'
+									}, {
+										value: 'l',
+										label: 'Slider'
+									}],
+									defaultValue: 'f'
 								},
 								style: {
 									type: 'string',
@@ -100,26 +122,6 @@ define(['./util', 'qlik'], function (util, qlik) {
 										return data.width === 'custom';
 									}
 								},
-								render: {
-									type: 'string',
-									component: 'dropdown',
-									label: 'Render as',
-									ref: 'render',
-									options: [{
-										value: 'b',
-										label: 'Button'
-									}, {
-										value: 's',
-										label: 'Select'
-									}, {
-										value: 'f',
-										label: 'Field'
-									}, {
-										value: 'l',
-										label: 'Slider'
-									}],
-									defaultValue: 'f'
-								},
 								vert: {
 									type: 'boolean',
 									label: 'Vertical',
@@ -127,6 +129,48 @@ define(['./util', 'qlik'], function (util, qlik) {
 									defaultValue: false,
 									show: function (data) {
 										return data.render === 'l';
+									}
+								}
+							}
+						},
+						values: {
+							type: 'items',
+							label: 'Values',
+							show: function (data) {
+								return data.render != 'f';
+							},
+							items: {
+								valueType: {
+									type: 'string',
+									component: 'dropdown',
+									label: 'Fixed or dynamic values',
+									ref: 'valueType',
+									options: [{
+										value: 'x',
+										label: 'Fixed'
+									}, {
+										value: 'd',
+										label: 'Dynamic'
+									}],
+									defaultValue: 'x',
+									show: function (data) {
+										return ['b', 's'].indexOf(data.render) > -1;
+									}
+								},
+								dynamicvalues: {
+									type: 'string',
+									ref: 'customwidth',
+									label: 'Dynamic values',
+									expression: 'optional',
+									show: function (data) {
+										return ['b', 's'].indexOf(data.render) > -1 && data.valueType === 'd';
+									}
+								},
+								dynamictext: {
+									component: 'text',
+									label: 'Use | to separate values and ~ to separate value and label, like this: value1|value2 or value1~label1|value2~label2)',
+									show: function (data) {
+										return ['b', 's'].indexOf(data.render) > -1 && data.valueType === 'd';
 									}
 								},
 								alternatives: {
@@ -152,7 +196,7 @@ define(['./util', 'qlik'], function (util, qlik) {
 										}
 									},
 									show: function (data) {
-										return data.render === 'b' || data.render === 's';
+										return ['b', 's'].indexOf(data.render) > -1 && data.valueType !== 'd';
 									}
 								},
 								min: {
