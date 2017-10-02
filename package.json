@@ -1,14 +1,18 @@
 {
   "name": "Variable",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Variable extension",
-  "keywords": ["qliksense extension"],
+  "keywords": [
+    "qliksense extension"
+  ],
   "main": "variable.js",
   "private": true,
   "homepage": "https://github.com/erikwett/qsVariable",
   "bugs": "https://github.com/erikwett/qsVariable/issues",
   "author": "Erik Wetterberg upper88.com",
-  "contributors": ["Brett Farley contextbi.com"],  
+  "contributors": [
+    "Brett Farley contextbi.com"
+  ],
   "license": "MIT",
   "repository": "https://github.com/erikwett/qsVariable",
   "devDependencies": {
