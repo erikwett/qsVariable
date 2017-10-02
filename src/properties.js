@@ -1,5 +1,5 @@
 /*global define*/
-define(["./util", "qlik"], function (util, qlik) {
+define(['./util', 'qlik'], function (util, qlik) {
 	'use strict';
 	var variableListDef = {
 		qVariableListDef: {
@@ -25,31 +25,31 @@ define(["./util", "qlik"], function (util, qlik) {
 
 		initialProperties: {
 			variableValue: {},
-			variableName: "",
-			render: "f",
+			variableName: '',
+			render: 'f',
 			alternatives: [],
 			min: 0,
 			max: 100,
 			step: 1,
-			style: "qlik",
-			width: "",
-			customwidth: ""
+			style: 'qlik',
+			width: '',
+			customwidth: ''
 		},
 		definition: {
-			type: "items",
-			component: "accordion",
+			type: 'items',
+			component: 'accordion',
 			items: {
 				settings: {
-					uses: "settings",
+					uses: 'settings',
 					items: {
 						variable: {
-							type: "items",
-							label: "Variable",
+							type: 'items',
+							label: 'Variable',
 							items: {
 								name: {
-									ref: "variableName",
-									label: "Name",
-									type: "string",
+									ref: 'variableName',
+									label: 'Name',
+									type: 'string',
 									component: 'dropdown',
 									options: function () {
 										return variableList || variableListPromise;
@@ -60,138 +60,138 @@ define(["./util", "qlik"], function (util, qlik) {
 									}
 								},
 								style: {
-									type: "string",
-									component: "dropdown",
-									label: "Style",
-									ref: "style",
+									type: 'string',
+									component: 'dropdown',
+									label: 'Style',
+									ref: 'style',
 									options: [{
-										value: "qlik",
-										label: "Qlik"
+										value: 'qlik',
+										label: 'Qlik'
 									}, {
-										value: "bootstrap",
-										label: "Bootstrap"
+										value: 'bootstrap',
+										label: 'Bootstrap'
 									}, {
-										value: "material",
-										label: "Material"
+										value: 'material',
+										label: 'Material'
 									}]
 								},
 								width: {
-									type: "string",
-									component: "dropdown",
-									label: "Width",
-									ref: "width",
+									type: 'string',
+									component: 'dropdown',
+									label: 'Width',
+									ref: 'width',
 									options: [{
-										value: "",
-										label: "Default"
+										value: '',
+										label: 'Default'
 									}, {
-										value: "fill",
-										label: "Fill"
+										value: 'fill',
+										label: 'Fill'
 									}, {
-										value: "custom",
-										label: "Custom"
+										value: 'custom',
+										label: 'Custom'
 									}]
 								},
 								customwidth: {
-									type: "string",
-									ref: "customwidth",
-									label: "Custom width",
-									expression: "optional",
+									type: 'string',
+									ref: 'customwidth',
+									label: 'Custom width',
+									expression: 'optional',
 									show: function (data) {
-										return data.width === "custom";
+										return data.width === 'custom';
 									}
 								},
 								render: {
-									type: "string",
-									component: "dropdown",
-									label: "Render as",
-									ref: "render",
+									type: 'string',
+									component: 'dropdown',
+									label: 'Render as',
+									ref: 'render',
 									options: [{
-										value: "b",
-										label: "Button"
+										value: 'b',
+										label: 'Button'
 									}, {
-										value: "s",
-										label: "Select"
+										value: 's',
+										label: 'Select'
 									}, {
-										value: "f",
-										label: "Field"
+										value: 'f',
+										label: 'Field'
 									}, {
-										value: "l",
-										label: "Slider"
+										value: 'l',
+										label: 'Slider'
 									}],
-									defaultValue: "f"
+									defaultValue: 'f'
 								},
 								vert: {
-									type: "boolean",
-									label: "Vertical",
-									ref: "vert",
+									type: 'boolean',
+									label: 'Vertical',
+									ref: 'vert',
 									defaultValue: false,
 									show: function (data) {
-										return data.render === "l";
+										return data.render === 'l';
 									}
 								},
 								alternatives: {
-									type: "array",
-									ref: "alternatives",
-									label: "Alternatives",
-									itemTitleRef: "label",
+									type: 'array',
+									ref: 'alternatives',
+									label: 'Alternatives',
+									itemTitleRef: 'label',
 									allowAdd: true,
 									allowRemove: true,
-									addTranslation: "Add Alternative",
+									addTranslation: 'Add Alternative',
 									items: {
 										value: {
-											type: "string",
-											ref: "value",
-											label: "Value",
-											expression: "optional"
+											type: 'string',
+											ref: 'value',
+											label: 'Value',
+											expression: 'optional'
 										},
 										label: {
-											type: "string",
-											ref: "label",
-											label: "Label",
-											expression: "optional"
+											type: 'string',
+											ref: 'label',
+											label: 'Label',
+											expression: 'optional'
 										}
 									},
 									show: function (data) {
-										return data.render === "b" || data.render === "s";
+										return data.render === 'b' || data.render === 's';
 									}
 								},
 								min: {
-									ref: "min",
-									label: "Min",
-									type: "number",
+									ref: 'min',
+									label: 'Min',
+									type: 'number',
 									defaultValue: 0,
-									expression: "optional",
+									expression: 'optional',
 									show: function (data) {
-										return data.render === "l";
+										return data.render === 'l';
 									}
 								},
 								max: {
-									ref: "max",
-									label: "Max",
-									type: "number",
+									ref: 'max',
+									label: 'Max',
+									type: 'number',
 									defaultValue: 100,
-									expression: "optional",
+									expression: 'optional',
 									show: function (data) {
-										return data.render === "l";
+										return data.render === 'l';
 									}
 								},
 								step: {
-									ref: "step",
-									label: "Step",
-									type: "number",
+									ref: 'step',
+									label: 'Step',
+									type: 'number',
 									defaultValue: 1,
-									expression: "optional",
+									expression: 'optional',
 									show: function (data) {
-										return data.render === "l";
+										return data.render === 'l';
 									}
 								},
 								rangelabel: {
-									ref: "rangelabel",
-									label: "Slider label",
-									type: "boolean",
+									ref: 'rangelabel',
+									label: 'Slider label',
+									type: 'boolean',
 									defaultValue: false,
 									show: function (data) {
-										return data.render === "l";
+										return data.render === 'l';
 									}
 								}
 							}

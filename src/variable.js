@@ -1,5 +1,5 @@
 /*global define*/
-define(["qlik", "./util", "./properties"], function (qlik, util, prop) {
+define(['qlik', './util', './properties'], function (qlik, util, prop) {
 	'use strict';
 
 	function calcPercent(el) {
@@ -8,10 +8,10 @@ define(["qlik", "./util", "./properties"], function (qlik, util, prop) {
 
 	function getClass(style, type, selected) {
 		switch (style) {
-			case "material":
-			case "bootstrap":
+			case 'material':
+			case 'bootstrap':
 				if (selected) {
-					return "selected";
+					return 'selected';
 				}
 				break;
 			default:
@@ -27,26 +27,26 @@ define(["qlik", "./util", "./properties"], function (qlik, util, prop) {
 	}
 
 	function getWidth(layout) {
-		if (layout.render === "l") {
-			return "98%";
+		if (layout.render === 'l') {
+			return '98%';
 		}
-		if (layout.width === "custom") {
+		if (layout.width === 'custom') {
 			return layout.customwidth;
 		}
-		if (layout.width === "fill") {
-			if (layout.render !== "b") {
-				return "100%";
+		if (layout.width === 'fill') {
+			if (layout.render !== 'b') {
+				return '100%';
 			}
-			return "calc( " + 100 / layout.alternatives.length + "% - 3px)";
+			return 'calc( ' + 100 / layout.alternatives.length + '% - 3px)';
 		}
 	}
 
 	function setLabel(slider, vert) {
 		if (slider.label) {
 			if (vert) {
-				slider.label.style.bottom = calcPercent(slider) + "%";
+				slider.label.style.bottom = calcPercent(slider) + '%';
 			} else {
-				slider.label.style.left = calcPercent(slider) + "%";
+				slider.label.style.left = calcPercent(slider) + '%';
 			}
 			slider.label.textContent = slider.value;
 		} else {
@@ -54,7 +54,7 @@ define(["qlik", "./util", "./properties"], function (qlik, util, prop) {
 		}
 	}
 
-	util.addStyleSheet("extensions/variable/variable.css");
+	util.addStyleSheet('extensions/variable/variable.css');
 	return {
 		initialProperties: prop.initialProperties,
 		definition: prop.definition,
@@ -63,7 +63,7 @@ define(["qlik", "./util", "./properties"], function (qlik, util, prop) {
 				width = getWidth(layout),
 				ext = this;
 			if (layout.vert) {
-				wrapper.classList.add("vert");
+				wrapper.classList.add('vert');
 			}
 			if (layout.render === 'b') {
 				layout.alternatives.forEach(function (alt) {
@@ -91,8 +91,8 @@ define(["qlik", "./util", "./properties"], function (qlik, util, prop) {
 			} else if (layout.render === 'l') {
 				var range = util.createElement('input');
 				if (layout.vert) {
-					range.style.width = $element.height() + "px";
-					range.style.left = "-" + (($element.height() - $element.width()) / 2) + "px";
+					range.style.width = $element.height() + 'px';
+					range.style.left = '-' + (($element.height() - $element.width()) / 2) + 'px';
 				} else {
 					range.style.width = width;
 				}
