@@ -1,11 +1,15 @@
 /*global define*/
-define(['qlik', './util', './properties'], function (qlik, util, prop) {
+define(['./util', './properties'], function (util, prop) {
 	'use strict';
 
 	function calcPercent(el) {
 		return (el.value - el.min) * 100 / (el.max - el.min);
 	}
-
+	function setVariableValue(ext, name, value) {
+		return ext.backendApi.model.enigmaModel.app.getVariableByName(name).then(function (v) {
+			return v.setStringValue(value);
+		});
+	}
 	function getClass(style, type, selected) {
 		switch (style) {
 			case 'material':
@@ -79,7 +83,7 @@ define(['qlik', './util', './properties'], function (qlik, util, prop) {
 					var btn = util.createElement('button', getClass(layout.style, 'button',
 						alt.value === layout.variableValue), alt.label);
 					btn.onclick = function () {
-						qlik.currApp(ext).variable.setContent(layout.variableName, alt.value);
+						setVariableValue(ext, layout.variableName, alt.value);
 					};
 					btn.style.width = width;
 					wrapper.appendChild(btn);
@@ -94,7 +98,7 @@ define(['qlik', './util', './properties'], function (qlik, util, prop) {
 					sel.appendChild(opt);
 				});
 				sel.onchange = function () {
-					qlik.currApp(ext).variable.setContent(layout.variableName, this.value);
+					setVariableValue(ext, layout.variableName, this.value);
 				};
 				wrapper.appendChild(sel);
 			} else if (layout.render === 'l') {
@@ -113,7 +117,7 @@ define(['qlik', './util', './properties'], function (qlik, util, prop) {
 				//range.style.width = '98%';
 				range.onchange = function () {
 					setLabel(this, layout.vert);
-					qlik.currApp(ext).variable.setContent(layout.variableName, this.value);
+					setVariableValue(ext, layout.variableName, this.value);
 				};
 				range.oninput = function () {
 					setLabel(this, layout.vert);
@@ -132,7 +136,7 @@ define(['qlik', './util', './properties'], function (qlik, util, prop) {
 				fld.type = 'text';
 				fld.value = layout.variableValue;
 				fld.onchange = function () {
-					qlik.currApp(ext).variable.setContent(layout.variableName, this.value);
+					setVariableValue(ext, layout.variableName, this.value);
 				};
 				wrapper.appendChild(fld);
 			}

@@ -1,26 +1,6 @@
 /*global define*/
-define(['./util', 'qlik'], function (util, qlik) {
+define([], function () {
 	'use strict';
-	var variableListDef = {
-		qVariableListDef: {
-			qType: 'variable',
-			qData: {
-				qComment: '/qComment',
-				qDefinition: '/qDefinition',
-				qNumberPresentation: '/qNumberPresentation'
-			}
-		}
-	};
-	var variableList, variableListPromise = qlik.currApp().createGenericObject(variableListDef,
-		function (reply) {
-			variableList = reply.qVariableList.qItems.map(function (item) {
-				return {
-					value: item.qName,
-					label: item.qName
-				};
-			});
-			return variableList;
-		});
 	return {
 
 		initialProperties: {
@@ -53,8 +33,18 @@ define(['./util', 'qlik'], function (util, qlik) {
 									label: 'Name',
 									type: 'string',
 									component: 'dropdown',
-									options: function () {
-										return variableList || variableListPromise;
+									options: function (a,b,c) {
+										console.log('options', a,b,c);										
+										return c.model.enigmaModel.app.getVariableList().then(function(reply){
+											console.log('variableList', reply);
+											return reply.map(function (item) {
+												return {
+													value: item.qName,
+													label: item.qName
+												};
+											});											
+										});
+										//return variableList || variableListPromise;
 									},
 									change: function (data) {
 										data.variableValue = data.variableValue || {};
