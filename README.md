@@ -11,6 +11,8 @@ Four different ways to render:
 ## News in version 4.0
 The extension no longer uses Mashup API/Capabilities API/qlik.js. Instead it uses Qlik enigma.js. This means that the old problem of getting hold of the app, which broke with Qlik Sense bug in Qlik Sense 3.2 SR3, is no longer needed, since enigmajs automatically gives you the right app.
 
+Read more on this here: http://extendingqlik.upper88.com/using-enigmajs-in-your-qlik-sense-extension/
+
 ## News in version 3.1
 You can now have an expression to define the available values in a dropdown or buttons. Thanks to Brett Farley of Context Bi for contributing to this feature. 
 
