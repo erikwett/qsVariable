@@ -70,6 +70,7 @@ define(['./util', './properties'], function (util, prop) {
 	return {
 		initialProperties: prop.initialProperties,
 		definition: prop.definition,
+		support: prop.support,
 		paint: function ($element, layout) {
 			var wrapper = util.createElement('div', layout.style || 'qlik'),
 				width = getWidth(layout),
