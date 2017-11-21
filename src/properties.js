@@ -233,6 +233,9 @@ define([], function () {
 					}
 				}
 			}
+		},
+		support: {
+			export: true
 		}
 	};
 });
