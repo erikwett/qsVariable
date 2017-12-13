@@ -29,6 +29,7 @@ gulp.task('requirejs', function (ready) {
 		gulp.src(TMP + '/' + MAIN + '.js').
 			pipe(replace('define("' + MAIN + '",', 'define(')).
 			pipe(replace('define("', 'define("' + DIRNAME)).
+			pipe(replace('"./', '"' + DIRNAME)).
 			pipe(gulp.dest(DIST));
 		ready();
 	}, function (error) {
