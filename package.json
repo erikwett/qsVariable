@@ -1,6 +1,6 @@
 {
   "name": "Variable",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Variable extension",
   "keywords": [
     "qliksense extension"
@@ -21,6 +21,7 @@
     "eslint": "^4.8.0",
     "gulp": "^3.9.0",
     "gulp-cssnano": "^2.1.0",
+    "gulp-dest": "^0.2.3",
     "gulp-ignore": "^2.0.1",
     "gulp-less": "^3.0.3",
     "gulp-replace": "^0.5.4",

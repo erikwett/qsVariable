@@ -1,7 +1,10 @@
+/* global require process Buffer */
 var gulp = require('gulp');
 var cssnano = require('gulp-cssnano');
 var runSequence = require('run-sequence');
 var gutil = require('gulp-util');
+var replace = require('gulp-replace');
+var dest = require('gulp-dest');
 var pkg = require('./package.json');
 
 var DIST = './dist',
@@ -11,9 +14,8 @@ var DIST = './dist',
 	NAME = pkg.name,
 	DEPLOY = process.env.HOMEDRIVE + process.env.HOMEPATH + '/Documents/Qlik/Sense/Extensions/' + NAME;
 
-gulp.task('requirejs', function (ready) {
+gulp.task('requirejs', ['less'], function (ready) {
 	var requirejs = require('requirejs');
-	var replace = require('gulp-replace');
 	var DIRNAME = "extensions/" + MAIN + "/";
 	requirejs.optimize({
 		baseUrl: SRC,
@@ -27,10 +29,10 @@ gulp.task('requirejs', function (ready) {
 		out: TMP + '/' + MAIN + '.js'
 	}, function () {
 		gulp.src(TMP + '/' + MAIN + '.js').
-			pipe(replace('define("' + MAIN + '",', 'define(')).
-			pipe(replace('define("', 'define("' + DIRNAME)).
-			pipe(replace('"./', '"' + DIRNAME)).
-			pipe(gulp.dest(DIST));
+		pipe(replace('define("' + MAIN + '",', 'define(')).
+		pipe(replace('define("', 'define("' + DIRNAME)).
+		pipe(replace('"./', '"' + DIRNAME)).
+		pipe(gulp.dest(DIST));
 		ready();
 	}, function (error) {
 		console.error('requirejs task failed', JSON.stringify(error));
@@ -48,10 +50,14 @@ gulp.task('qext', function () {
 	if (pkg.contributors) {
 		qext.contributors = pkg.contributors;
 	}
-	var src = require('stream').Readable({ objectMode: true })
+	var src = require('stream').Readable({
+		objectMode: true
+	})
 	src._read = function () {
 		this.push(new gutil.File({
-			cwd: "", base: "", path: MAIN + '.qext',
+			cwd: "",
+			base: "",
+			path: MAIN + '.qext',
 			contents: new Buffer(JSON.stringify(qext, null, 4))
 		}));
 		this.push(null);
@@ -59,26 +65,26 @@ gulp.task('qext', function () {
 	return src.pipe(gulp.dest(DIST));
 });
 
-gulp.task('less', function () {
+gulp.task('less', function (ready) {
 	var less = require('gulp-less');
 	var LessPluginAutoPrefix = require('less-plugin-autoprefix');
 	var autoprefix = new LessPluginAutoPrefix({
 		browsers: ["last 2 versions"]
 	});
-	return gulp.src(SRC + '/**/*.less')
+	gulp.src(SRC + '/**/*.less')
 		.pipe(less({
 			plugins: [autoprefix]
 		}))
 		.pipe(cssnano())
-		.pipe(gulp.dest(DIST));
+		.pipe(replace(/^/,
+			'define([], function () {var style = document.createElement("style");style.innerHTML = "'))
+		.pipe(replace(/$/, '";document.head.appendChild(style);});'))
+		.pipe(dest('', {
+			ext: '.js'
+		}))
+		.pipe(gulp.dest(SRC));
+	ready();
 });
-
-gulp.task('css', function () {
-	return gulp.src(SRC + '/**/*.css')
-		.pipe(cssnano())
-		.pipe(gulp.dest(DIST));
-});
-
 
 gulp.task('clean', function (ready) {
 	var del = require('del');
@@ -86,27 +92,28 @@ gulp.task('clean', function (ready) {
 	ready();
 });
 
-gulp.task('zip-build', ['qext', 'less', 'css', 'requirejs'], function () {
+gulp.task('zip-build', function () {
 	var zip = require('gulp-zip');
-	return gulp.src(DIST + '/**/*')
-		.pipe(zip(NAME + '.zip'))
-		.pipe(gulp.dest(DIST));
+	setTimeout(function () {
+		gulp.src([DIST + '/**/*.qext', DIST + '/**/*.js'])
+			.pipe(zip(NAME + '.zip'))
+			.pipe(gulp.dest(DIST));
+	}, 1000);
 });
 
 gulp.task('build', function () {
-	return runSequence('clean',
+	return runSequence('clean', 'requirejs', 'qext',
 		'zip-build'
 	);
 });
 
 gulp.task('debug', ['less', 'qext'], function () {
-	return gulp.src([DIST + '/**/*.qext', SRC + '/**/*.js', DIST + '/**/*.css'])
+	return gulp.src([DIST + '/**/*.qext', SRC + '/**/*.js'])
 		.pipe(gulp.dest(DEPLOY));
-
 });
 
-gulp.task('deploy', ['less', 'qext', 'css', 'requirejs'], function () {
-	return gulp.src([DIST + '/**/*.qext', DIST + '/**/*.js', DIST + '/**/*.css'])
+gulp.task('deploy', ['less', 'qext', 'requirejs'], function () {
+	return gulp.src([DIST + '/**/*.qext', DIST + '/**/*.js'])
 		.pipe(gulp.dest(DEPLOY));
 });
 

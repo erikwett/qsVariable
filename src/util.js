@@ -21,17 +21,8 @@ define([], function () {
 		}
 	}
 
-	function addStyleSheet(href) {
-		var link = createElement('link');
-		link.rel = 'stylesheet';
-		link.type = 'text/css';
-		link.href = require.toUrl(href);
-		document.head.appendChild(link);
-	}
-
 	return {
 		createElement: createElement,
-		setChild: setChild,
-		addStyleSheet: addStyleSheet
+		setChild: setChild
 	};
 });

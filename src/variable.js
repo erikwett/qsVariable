@@ -1,5 +1,5 @@
 /*global define*/
-define(['./util', './properties'], function (util, prop) {
+define(['./util', './properties','./style'], function (util, prop) {
 	'use strict';
 
 	function calcPercent(el) {
@@ -66,7 +66,6 @@ define(['./util', './properties'], function (util, prop) {
 			};
 		});
 	}
-	util.addStyleSheet('extensions/variable/variable.css');
 	return {
 		initialProperties: prop.initialProperties,
 		definition: prop.definition,

@@ -8,6 +8,9 @@ Four different ways to render:
 - Field: an input field, no validation, anything can be entered
 - Slider: a HTML slider, you can define min (default 0), max (default 100) and step (default 1)
 
+## News in version 4.1
+Build process has been modified so that the css style sheet is now included in the packaged js file. No separate loading of css file any more.
+
 ## News in version 4.0
 The extension no longer uses Mashup API/Capabilities API/qlik.js. Instead it uses Qlik enigma.js. This means that the old problem of getting hold of the app, which broke with Qlik Sense bug in Qlik Sense 3.2 SR3, is no longer needed, since enigmajs automatically gives you the right app.
 
