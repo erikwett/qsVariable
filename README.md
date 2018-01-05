@@ -8,27 +8,21 @@ Four different ways to render:
 - Field: an input field, no validation, anything can be entered
 - Slider: a HTML slider, you can define min (default 0), max (default 100) and step (default 1)
 
-## News in version 4.0
-The extension no longer uses Mashup API/Capabilities API/qlik.js. Instead it uses Qlik enigma.js. This means that the old problem of getting hold of the app, which broke with Qlik Sense bug in Qlik Sense 3.2 SR3, is no longer needed, since enigmajs automatically gives you the right app.
+You can have an expression to define the available values in a dropdown or buttons. 
 
-Read more on this here: http://extendingqlik.upper88.com/using-enigmajs-in-your-qlik-sense-extension/
+## News in version 5.0
+Build process has been modified so that the css style sheet is now included in the packaged js file. No separate loading of css file any more.
 
-## News in version 3.1
-You can now have an expression to define the available values in a dropdown or buttons. Thanks to Brett Farley of Context Bi for contributing to this feature. 
+The extension yet again uses Capbilities API/qlik.js.
 
-## News in Version 3
-The extension is now upgraded for Qlik Sense June 2017. This version will probably not work for Qlik Sense 3.2 SR3 and SR4, so you will need to use the previous version, see below.
+### Qlik Versions
+The extension has been tested with the following versions:
+November 2017 patch 1
+September 2017 patch 2
+June 2017 patch 3
+3.2 SR5 
 
-News in short:
-- Auto-create of variable removed, create your variable in the script or in the variable dialog, both methods also allows you to set initial value
-- Vertical sliders are now available
-- workaround for Qlik Sense 3.2 SR3 and SR4 has been removed, so extension works in a multi-app mashup again
-
-## Qlik Sense 3.2 SR3/SR4 Issue:
-If you encounter problems with the extension in Qlik Sense 3.2 SR3 or SR4, this is probably because of a known bug with the Qlik Sense API. Please upgrade to Qlik Sense June 2017 or contact Qlik Support for a patch. If this is not possible, you can use the previous version of the extension. Download it from here:
-https://github.com/erikwett/qsVariable/blob/Version2.3.1/dist/variable.zip
-
-If you use the extension in a mashup with more than one app, this version might not work as expected.
+If you are using version 3.2, there is a bug in the capabilities API in this version which means that the extension might not work in a mashup with more than one app. If you encounter this bug, please upgrade to a leter release.
 
 Three different styles to choose from:
 ## Qlik

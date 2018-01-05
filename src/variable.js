@@ -1,15 +1,21 @@
 /*global define*/
-define(['./util', './properties'], function (util, prop) {
+define(['qlik', './util', './properties', './style'], function (qlik, util, prop) {
 	'use strict';
 
 	function calcPercent(el) {
 		return (el.value - el.min) * 100 / (el.max - el.min);
 	}
+
 	function setVariableValue(ext, name, value) {
-		return ext.backendApi.model.enigmaModel.app.getVariableByName(name).then(function (v) {
-			return v.setStringValue(value);
-		});
+		var app = qlik.currApp(ext);
+		if (app.model.constructor.name !== 'App') {
+			// work-around for Qlik Sense 3.2 Bug: 
+			// currApp with param returns invalid app object
+			app = qlik.currApp();
+		}
+		app.variable.setContent(name, value);
 	}
+
 	function getClass(style, type, selected) {
 		switch (style) {
 			case 'material':
@@ -57,6 +63,7 @@ define(['./util', './properties'], function (util, prop) {
 			slider.title = slider.value;
 		}
 	}
+
 	function getAlternatives(text) {
 		return text.split('|').map(function (item) {
 			var arr = item.split('~');
@@ -66,7 +73,6 @@ define(['./util', './properties'], function (util, prop) {
 			};
 		});
 	}
-	util.addStyleSheet('extensions/variable/variable.css');
 	return {
 		initialProperties: prop.initialProperties,
 		definition: prop.definition,

@@ -1,6 +1,21 @@
 /*global define*/
-define([], function () {
+define(['qlik'], function (qlik) {
 	'use strict';
+	var variableList;
+	var variableListPromise = qlik.currApp().createGenericObject({
+		qVariableListDef: {
+			qType: 'variable'
+		}
+	},
+		function (reply) {
+			variableList = reply.qVariableList.qItems.map(function (item) {
+				return {
+					value: item.qName,
+					label: item.qName
+				};
+			});
+			return variableList;
+		});
 	return {
 
 		initialProperties: {
@@ -33,18 +48,8 @@ define([], function () {
 									label: 'Name',
 									type: 'string',
 									component: 'dropdown',
-									options: function (a,b,c) {
-										console.log('options', a,b,c);										
-										return c.model.enigmaModel.app.getVariableList().then(function(reply){
-											console.log('variableList', reply);
-											return reply.map(function (item) {
-												return {
-													value: item.qName,
-													label: item.qName
-												};
-											});											
-										});
-										//return variableList || variableListPromise;
+									options: function () {
+										return variableList || variableListPromise;
 									},
 									change: function (data) {
 										data.variableValue = data.variableValue || {};
