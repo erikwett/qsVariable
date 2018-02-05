@@ -148,7 +148,7 @@ define(['qlik', './util', './properties', './style'], function (qlik, util, prop
 				wrapper.appendChild(fld);
 			}
 			util.setChild($element[0], wrapper);
-			qlik.Promise.resolve();
+			return qlik.Promise.resolve();
 		}
 	};
 
