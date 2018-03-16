@@ -3,10 +3,10 @@ define(['qlik'], function (qlik) {
 	'use strict';
 	var variableList;
 	var variableListPromise = qlik.currApp().createGenericObject({
-		qVariableListDef: {
-			qType: 'variable'
-		}
-	},
+			qVariableListDef: {
+				qType: 'variable'
+			}
+		},
 		function (reply) {
 			variableList = reply.qVariableList.qItems.map(function (item) {
 				return {
@@ -16,8 +16,34 @@ define(['qlik'], function (qlik) {
 			});
 			return variableList;
 		});
-	return {
 
+	function stringify(layout) {
+		return JSON.stringify([layout.variableName,
+			layout.render,
+			layout.valueType,
+			layout.alternatives,
+			layout.dynamicvalues,
+			layout.min,
+			layout.max,
+			layout.step,
+			layout.style,
+			layout.width,
+			layout.customwidth,
+			layout.vert,
+			layout.updateondrag
+		]);
+	}
+
+	function cloneSetup(layout) {
+		var clone = stringify(layout);
+		return {
+			changed: function (layout) {
+				return stringify(layout) !== clone;
+			}
+		};
+	}
+	return {
+		cloneSetup: cloneSetup,
 		initialProperties: {
 			variableValue: {},
 			variableName: '',
@@ -30,7 +56,8 @@ define(['qlik'], function (qlik) {
 			step: 1,
 			style: 'qlik',
 			width: '',
-			customwidth: ''
+			customwidth: '',
+			updateondrag: false
 		},
 		definition: {
 			type: 'items',
@@ -121,6 +148,15 @@ define(['qlik'], function (qlik) {
 									type: 'boolean',
 									label: 'Vertical',
 									ref: 'vert',
+									defaultValue: false,
+									show: function (data) {
+										return data.render === 'l';
+									}
+								},
+								updateondrag: {
+									type: 'boolean',
+									label: 'Update on drag',
+									ref: 'updateondrag',
 									defaultValue: false,
 									show: function (data) {
 										return data.render === 'l';

@@ -73,11 +73,39 @@ define(['qlik', './util', './properties', './style'], function (qlik, util, prop
 			};
 		});
 	}
+
+	function showValue(element, layout) {
+		// find elements
+		var elements = element.querySelectorAll('input, button, option');
+
+		for (var index = 0; index < elements.length; index++) {
+			var el = elements[index];
+			switch (el.tagName) {
+				case 'INPUT':
+					el.value = layout.variableValue;
+					setLabel(el, layout.vert);
+					break;
+				case 'OPTION':
+					el.selected = (el.value === layout.variableValue);
+					break;
+				case 'BUTTON':
+					el.className = getClass(layout.style, 'button', el.dataset.value === layout.variableValue);
+					break;
+				default:
+					console.log('showValue', el);
+			}
+		}
+	}
 	return {
 		initialProperties: prop.initialProperties,
 		definition: prop.definition,
 		support: prop.support,
 		paint: function ($element, layout) {
+			if (this.oldSetup && !this.oldSetup.changed(layout)) {
+				showValue($element[0], layout);
+				return;
+			}
+			this.oldSetup = prop.cloneSetup(layout);
 			var wrapper = util.createElement('div', layout.style || 'qlik'),
 				width = getWidth(layout),
 				alternatives = layout.valueType === 'd' ? getAlternatives(layout.dynamicvalues) : layout.alternatives,
@@ -92,6 +120,7 @@ define(['qlik', './util', './properties', './style'], function (qlik, util, prop
 					btn.onclick = function () {
 						setVariableValue(ext, layout.variableName, alt.value);
 					};
+					btn.dataset.value = alt.value;
 					btn.style.width = width;
 					wrapper.appendChild(btn);
 				});
@@ -128,6 +157,9 @@ define(['qlik', './util', './properties', './style'], function (qlik, util, prop
 				};
 				range.oninput = function () {
 					setLabel(this, layout.vert);
+					if (layout.updateondrag) {
+						setVariableValue(ext, layout.variableName, this.value);
+					}
 				};
 				wrapper.appendChild(range);
 				if (layout.rangelabel) {
