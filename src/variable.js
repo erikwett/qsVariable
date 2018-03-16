@@ -103,7 +103,7 @@ define(['qlik', './util', './properties', './style'], function (qlik, util, prop
 		paint: function ($element, layout) {
 			if (this.oldSetup && !this.oldSetup.changed(layout)) {
 				showValue($element[0], layout);
-				return;
+				return qlik.Promise.resolve();
 			}
 			this.oldSetup = prop.cloneSetup(layout);
 			var wrapper = util.createElement('div', layout.style || 'qlik'),

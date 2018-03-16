@@ -1,8 +1,10 @@
 /*global define*/
 define(['qlik'], function (qlik) {
 	'use strict';
-	var variableList;
-	var variableListPromise = qlik.currApp().createGenericObject({
+	var variableList, variableListPromise;
+
+	function getPromise() {
+		variableListPromise = variableListPromise || qlik.currApp().createGenericObject({
 			qVariableListDef: {
 				qType: 'variable'
 			}
@@ -16,6 +18,8 @@ define(['qlik'], function (qlik) {
 			});
 			return variableList;
 		});
+		return variableListPromise;
+	}
 
 	function stringify(layout) {
 		return JSON.stringify([layout.variableName,
@@ -76,7 +80,7 @@ define(['qlik'], function (qlik) {
 									type: 'string',
 									component: 'dropdown',
 									options: function () {
-										return variableList || variableListPromise;
+										return variableList || getPromise();
 									},
 									change: function (data) {
 										data.variableValue = data.variableValue || {};
