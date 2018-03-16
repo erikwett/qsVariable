@@ -1,7 +1,7 @@
 {
     "name": "Variable",
     "description": "Variable extension",
-    "version": "5.1.1",
+    "version": "5.1.2",
     "type": "visualization",
     "author": "Erik Wetterberg upper88.com",
     "contributors": [
