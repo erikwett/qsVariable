@@ -10,6 +10,10 @@ Four different ways to render:
 
 You can have an expression to define the available values in a dropdown or buttons. 
 
+## News in version 5.2
+The property 'Thin Header' will make sure that if you do not have a title or subtitle the header will be very thin,
+to avoid buttons getting cut off.
+
 ## News in version 5.0
 Build process has been modified so that the css style sheet is now included in the packaged js file. No separate loading of css file any more.
 

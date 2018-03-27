@@ -169,6 +169,12 @@ define(['qlik'], function (qlik) {
 									show: function (data) {
 										return data.render === 'l';
 									}
+								},
+								thinHeader:{
+									type: 'boolean',
+									ref: 'thinHeader',
+									label: 'Thin header',
+									defaultValue: false
 								}
 							}
 						},
