@@ -8,11 +8,12 @@ define(['qlik', './util', './properties', './style'], function(qlik, util, prop)
 
 	function setVariableValue(ext, name, value) {
 		var app = qlik.currApp(ext);
-		if (app.model.constructor.name !== 'App') {
-			// work-around for Qlik Sense 3.2 Bug: 
-			// currApp with param returns invalid app object
-			app = qlik.currApp();
-		}
+		// work-around for Qlik Sense 3.2 Bug: 
+		// currApp with param returns invalid app object
+		//enable if you are using 3.2 and extension does not work
+		//if (app.model.constructor.name !== 'App') {
+		//	app = qlik.currApp();
+		//}
 		app.variable.setContent(name, value);
 	}
 
