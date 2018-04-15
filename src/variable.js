@@ -1,5 +1,5 @@
 /*global define*/
-define(['qlik', './util', './properties', './style'], function(qlik, util, prop) {
+define(['qlik', './util', './properties', './style'], function (qlik, util, prop) {
 	'use strict';
 
 	function calcPercent(el) {
@@ -66,7 +66,7 @@ define(['qlik', './util', './properties', './style'], function(qlik, util, prop)
 	}
 
 	function getAlternatives(text) {
-		return text.split('|').map(function(item) {
+		return text.split('|').map(function (item) {
 			var arr = item.split('~');
 			return {
 				value: arr[0],
@@ -101,8 +101,12 @@ define(['qlik', './util', './properties', './style'], function(qlik, util, prop)
 		initialProperties: prop.initialProperties,
 		definition: prop.definition,
 		support: prop.support,
-		paint: function($element, layout) {
-			$element.closest('.qv-object-variable').toggleClass('thin-header', layout.thinHeader);
+		paint: function ($element, layout) {
+			if (layout.thinHeader) {
+				$element.closest('.qv-object-variable').addClass('thin-header');
+			} else {
+				$element.closest('.qv-object-variable').removeClass('thin-header');
+			}
 			if (this.oldSetup && !this.oldSetup.changed(layout)) {
 				showValue($element[0], layout);
 				return qlik.Promise.resolve();
@@ -116,10 +120,10 @@ define(['qlik', './util', './properties', './style'], function(qlik, util, prop)
 				wrapper.classList.add('vert');
 			}
 			if (layout.render === 'b') {
-				alternatives.forEach(function(alt) {
+				alternatives.forEach(function (alt) {
 					var btn = util.createElement('button', getClass(layout.style, 'button',
 						alt.value === layout.variableValue), alt.label);
-					btn.onclick = function() {
+					btn.onclick = function () {
 						setVariableValue(ext, layout.variableName, alt.value);
 					};
 					btn.dataset.value = alt.value;
@@ -129,13 +133,13 @@ define(['qlik', './util', './properties', './style'], function(qlik, util, prop)
 			} else if (layout.render === 's') {
 				var sel = util.createElement('select', getClass(layout.style, 'select'));
 				sel.style.width = width;
-				alternatives.forEach(function(alt) {
+				alternatives.forEach(function (alt) {
 					var opt = util.createElement('option', undefined, alt.label);
 					opt.value = alt.value;
 					opt.selected = alt.value === layout.variableValue;
 					sel.appendChild(opt);
 				});
-				sel.onchange = function() {
+				sel.onchange = function () {
 					setVariableValue(ext, layout.variableName, this.value);
 				};
 				wrapper.appendChild(sel);
@@ -153,11 +157,11 @@ define(['qlik', './util', './properties', './style'], function(qlik, util, prop)
 				range.step = layout.step || 1;
 				range.value = layout.variableValue;
 				//range.style.width = '98%';
-				range.onchange = function() {
+				range.onchange = function () {
 					setLabel(this, layout.vert);
 					setVariableValue(ext, layout.variableName, this.value);
 				};
-				range.oninput = function() {
+				range.oninput = function () {
 					setLabel(this, layout.vert);
 					if (layout.updateondrag) {
 						setVariableValue(ext, layout.variableName, this.value);
@@ -176,7 +180,7 @@ define(['qlik', './util', './properties', './style'], function(qlik, util, prop)
 				fld.style.width = width;
 				fld.type = 'text';
 				fld.value = layout.variableValue;
-				fld.onchange = function() {
+				fld.onchange = function () {
 					setVariableValue(ext, layout.variableName, this.value);
 				};
 				wrapper.appendChild(fld);
