@@ -106,6 +106,9 @@ define(['qlik'], function (qlik) {
 										value: 'f',
 										label: 'Input Field'
 									}, {
+										value: 'p',
+										label: 'Date Picker'
+									}, {
 										value: 'l',
 										label: 'Slider'
 									}],

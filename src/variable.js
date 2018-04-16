@@ -1,5 +1,5 @@
 /*global define*/
-define(['qlik', './util', './properties', './style'], function (qlik, util, prop) {
+define(['qlik', './util', './properties', './tiny-date-picker', './style'], function (qlik, util, prop, TinyDatePicker) {
 	'use strict';
 
 	function calcPercent(el) {
@@ -8,7 +8,7 @@ define(['qlik', './util', './properties', './style'], function (qlik, util, prop
 
 	function setVariableValue(ext, name, value) {
 		var app = qlik.currApp(ext);
-		// work-around for Qlik Sense 3.2 Bug: 
+		// work-around for Qlik Sense 3.2 Bug:
 		// currApp with param returns invalid app object
 		//enable if you are using 3.2 and extension does not work
 		//if (app.model.constructor.name !== 'App') {
@@ -175,6 +175,17 @@ define(['qlik', './util', './properties', './style'], function (qlik, util, prop
 					wrapper.appendChild(labelwrap);
 				}
 				setLabel(range, layout.vert);
+			} else if (layout.render === 'p') {
+				/* Date picker */
+				var fld = util.createElement('input', getClass(layout.style, 'input'));
+				fld.style.width = width;
+				fld.type = 'text';
+				fld.value = layout.variableValue;
+				fld.onchange = function () {
+					setVariableValue(ext, layout.variableName, this.value);
+				};
+				wrapper.appendChild(fld);
+				TinyDatePicker(fld);
 			} else {
 				var fld = util.createElement('input', getClass(layout.style, 'input'));
 				fld.style.width = width;

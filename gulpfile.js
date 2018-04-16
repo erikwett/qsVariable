@@ -76,6 +76,7 @@ gulp.task('less', function (ready) {
 			plugins: [autoprefix]
 		}))
 		.pipe(cssnano())
+		.pipe(replace('"','\''))
 		.pipe(replace(/^/,
 			'define([], function () {var style = document.createElement("style");style.innerHTML = "'))
 		.pipe(replace(/$/, '";document.head.appendChild(style);});'))
