@@ -1,5 +1,5 @@
 /*global define*/
-define(['qlik'], function (qlik) {
+define(['qlik', './moment-with-locales'], function (qlik, moment) {
 	'use strict';
 	var variableList, variableListPromise;
 
@@ -61,6 +61,7 @@ define(['qlik'], function (qlik) {
 			step: 1,
 			style: 'qlik',
 			width: '',
+			mlocale: 'en',
 			customwidth: '',
 			updateondrag: false
 		},
@@ -106,6 +107,9 @@ define(['qlik'], function (qlik) {
 										value: 'f',
 										label: 'Input Field'
 									}, {
+										value: 'p',
+										label: 'Date Picker'
+									}, {
 										value: 'l',
 										label: 'Slider'
 									}],
@@ -150,6 +154,25 @@ define(['qlik'], function (qlik) {
 									expression: 'optional',
 									show: function (data) {
 										return data.width === 'custom';
+									}
+								},
+								mlocale: {
+									type: 'string',
+									ref: 'mlocale',
+									component: 'dropdown',
+									label: 'Moment.js locales',
+									options: function() {
+										var locales = [];
+										locales = moment.locales().map(function(locale) {
+											return {
+												value: locale,
+												label: locale
+											}
+										});
+										return locales;
+									},
+									show: function (data) {
+										return data.render === 'p';
 									}
 								},
 								vert: {

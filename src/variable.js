@@ -1,5 +1,5 @@
 /*global define*/
-define(['qlik', './util', './properties', './style'], function (qlik, util, prop) {
+define(['qlik', './util', './properties', './tiny-date-picker', './moment-with-locales', './style'], function (qlik, util, prop, TinyDatePicker, moment) {
 	'use strict';
 
 	function calcPercent(el) {
@@ -8,7 +8,7 @@ define(['qlik', './util', './properties', './style'], function (qlik, util, prop
 
 	function setVariableValue(ext, name, value) {
 		var app = qlik.currApp(ext);
-		// work-around for Qlik Sense 3.2 Bug: 
+		// work-around for Qlik Sense 3.2 Bug:
 		// currApp with param returns invalid app object
 		//enable if you are using 3.2 and extension does not work
 		//if (app.model.constructor.name !== 'App') {
@@ -102,6 +102,7 @@ define(['qlik', './util', './properties', './style'], function (qlik, util, prop
 		definition: prop.definition,
 		support: prop.support,
 		paint: function ($element, layout) {
+			var uniqueId = '_' + Math.random().toString(36).substr(2, 9);
 			if (layout.thinHeader) {
 				$element.closest('.qv-object-variable').addClass('thin-header');
 			} else {
@@ -175,6 +176,17 @@ define(['qlik', './util', './properties', './style'], function (qlik, util, prop
 					wrapper.appendChild(labelwrap);
 				}
 				setLabel(range, layout.vert);
+			} else if (layout.render === 'p') {
+				/* Date picker */
+				var fld = util.createElement('input', getClass(layout.style, 'input'));
+				fld.style.width = width;
+				fld.type = 'text';
+				fld.value = layout.variableValue;
+				fld.id = uniqueId;
+				fld.onchange = function () {
+					setVariableValue(ext, layout.variableName, this.value);
+				};
+				wrapper.appendChild(fld);
 			} else {
 				var fld = util.createElement('input', getClass(layout.style, 'input'));
 				fld.style.width = width;
@@ -186,6 +198,28 @@ define(['qlik', './util', './properties', './style'], function (qlik, util, prop
 				wrapper.appendChild(fld);
 			}
 			util.setChild($element[0], wrapper);
+			if (layout.render === 'p') {
+				moment.locale(layout.mlocale);
+				console.log('moment.js locale: ' + moment.locale());
+				TinyDatePicker(document.querySelector('#' + uniqueId), {
+					lang: {
+				    days: moment.weekdaysShort(),
+				    months: moment.months(),
+						/* not using these buttons */
+				    today: '',
+				    clear: '',
+				    close: '',
+				  },
+					format: function(date) {
+				    return moment(date).format('L');
+				  },
+					parse: function(str) {
+						var date = moment(str, 'L').toDate();
+						return isNaN(date) ? new Date() : date;
+					},
+					mode: 'dp-below'
+				});
+			}
 			return qlik.Promise.resolve();
 		}
 	};
