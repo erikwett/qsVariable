@@ -1,5 +1,5 @@
 /*global define*/
-define(['qlik', './util', './properties', './tiny-date-picker', './style'], function (qlik, util, prop, TinyDatePicker) {
+define(['qlik', './util', './properties', './tiny-date-picker', './moment-with-locales', './style'], function (qlik, util, prop, TinyDatePicker, moment) {
 	'use strict';
 
 	function calcPercent(el) {
@@ -102,6 +102,7 @@ define(['qlik', './util', './properties', './tiny-date-picker', './style'], func
 		definition: prop.definition,
 		support: prop.support,
 		paint: function ($element, layout) {
+			var uniqueId = '_' + Math.random().toString(36).substr(2, 9);
 			if (layout.thinHeader) {
 				$element.closest('.qv-object-variable').addClass('thin-header');
 			} else {
@@ -181,11 +182,11 @@ define(['qlik', './util', './properties', './tiny-date-picker', './style'], func
 				fld.style.width = width;
 				fld.type = 'text';
 				fld.value = layout.variableValue;
+				fld.id = uniqueId;
 				fld.onchange = function () {
 					setVariableValue(ext, layout.variableName, this.value);
 				};
 				wrapper.appendChild(fld);
-				TinyDatePicker(fld);
 			} else {
 				var fld = util.createElement('input', getClass(layout.style, 'input'));
 				fld.style.width = width;
@@ -197,6 +198,28 @@ define(['qlik', './util', './properties', './tiny-date-picker', './style'], func
 				wrapper.appendChild(fld);
 			}
 			util.setChild($element[0], wrapper);
+			if (layout.render === 'p') {
+				moment.locale(layout.mlocale);
+				console.log('moment.js locale: ' + moment.locale());
+				TinyDatePicker(document.querySelector('#' + uniqueId), {
+					lang: {
+				    days: moment.weekdaysShort(),
+				    months: moment.months(),
+						/* not using these buttons */
+				    today: '',
+				    clear: '',
+				    close: '',
+				  },
+					format: function(date) {
+				    return moment(date).format('L');
+				  },
+					parse: function(str) {
+						var date = moment(str, 'L').toDate();
+						return isNaN(date) ? new Date() : date;
+					},
+					mode: 'dp-below'
+				});
+			}
 			return qlik.Promise.resolve();
 		}
 	};

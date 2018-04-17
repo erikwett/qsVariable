@@ -430,7 +430,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.dp:before {
+/*.dp:before {
   content: ' ';
   height: 6px;
   position: absolute;
@@ -439,7 +439,7 @@
   right: 0;
   background: #3B99FC;
   background: linear-gradient(-90deg, #3B99FC 0%, #8AEFC8 100%);
-}
+}*/
 
 .dp-permanent .dp {
   padding-top: 0;
@@ -507,6 +507,10 @@
   border-radius: 2px;
   border: 0;
   background: transparent;
+}
+
+.dp-cal-month:first-letter {
+  text-transform:capitalize;
 }
 
 .dp-cal-header {
@@ -578,8 +582,9 @@
 }
 
 .dp-cal-footer {
-  text-align: center;
-  background: #f5f5f5;
+  display: none;
+  /*text-align: center;
+  background: #f5f5f5;*/
 }
 
 .dp-day-today:after {
@@ -597,14 +602,15 @@
 .dp-close,
 .dp-clear,
 .dp-today {
-  box-sizing: border-box;
+  display: none;
+  /*box-sizing: border-box;
   display: inline-block;
   width: 33%;
   padding: 8px;
   text-decoration: none;
   color: inherit;
   border: 0;
-  background: transparent;
+  background: transparent;*/
 }
 
 .dp-permanent .dp-close,

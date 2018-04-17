@@ -1,6 +1,6 @@
 {
-    "name": "Variable_DEV",
-    "description": "Variable DEV extension",
+    "name": "Variable",
+    "description": "Variable extension",
     "version": "5.2.2",
     "type": "visualization",
     "author": "Erik Wetterberg upper88.com",
