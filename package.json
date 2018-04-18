@@ -30,5 +30,8 @@
     "less-plugin-autoprefix": "^1.5.1",
     "requirejs": "^2.1.22",
     "run-sequence": "^1.1.2"
+  },
+  "scripts": {
+    "build": "gulp less && gulp build"
   }
 }
