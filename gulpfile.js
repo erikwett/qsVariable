@@ -1,7 +1,6 @@
 /* global require process Buffer */
 var gulp = require('gulp');
 var cssnano = require('gulp-cssnano');
-var runSequence = require('run-sequence');
 var gutil = require('gulp-util');
 var replace = require('gulp-replace');
 var dest = require('gulp-dest');
@@ -65,13 +64,13 @@ gulp.task('qext', function () {
 	return src.pipe(gulp.dest(DIST));
 });
 
-gulp.task('less', function (ready) {
+gulp.task('less', function () {
 	var less = require('gulp-less');
 	var LessPluginAutoPrefix = require('less-plugin-autoprefix');
 	var autoprefix = new LessPluginAutoPrefix({
 		browsers: ["last 2 versions"]
 	});
-	gulp.src(SRC + '/**/*.less')
+	return gulp.src(SRC + '/**/*.less')
 		.pipe(less({
 			plugins: [autoprefix]
 		}))
@@ -83,7 +82,6 @@ gulp.task('less', function (ready) {
 			ext: '.js'
 		}))
 		.pipe(gulp.dest(SRC));
-	ready();
 });
 
 gulp.task('clean', function (ready) {
@@ -92,19 +90,13 @@ gulp.task('clean', function (ready) {
 	ready();
 });
 
-gulp.task('zip-build', function () {
+gulp.task('build',['clean', 'requirejs', 'qext'], function () {
 	var zip = require('gulp-zip');
 	setTimeout(function () {
 		gulp.src([DIST + '/**/*.qext', DIST + '/**/*.js'])
 			.pipe(zip(NAME + '.zip'))
 			.pipe(gulp.dest(DIST));
 	}, 1000);
-});
-
-gulp.task('build', function () {
-	return runSequence('clean', 'requirejs', 'qext',
-		'zip-build'
-	);
 });
 
 gulp.task('debug', ['less', 'qext'], function () {
