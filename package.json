@@ -1,6 +1,6 @@
 {
   "name": "Variable",
-  "version": "5.2.2",
+  "version": "5.2.3",
   "description": "Variable extension",
   "keywords": [
     "qliksense extension"
@@ -28,7 +28,6 @@
     "gulp-util": "^3.0.7",
     "gulp-zip": "^3.0.2",
     "less-plugin-autoprefix": "^1.5.1",
-    "requirejs": "^2.1.22",
-    "run-sequence": "^1.1.2"
+    "requirejs": "^2.1.22"
   }
 }
