@@ -1,6 +1,16 @@
 # qsVariable
 Variable extension for Qlik Sense
 
+## This repository is now archived
+The extension is, under the name qlik-variable, now available in the Dashboard bundle, available with the Qlik Sense installation.
+To install it simply select the Dashboard bundle in the installation progam. 
+
+The current source code is available at:
+https://github.com/qlik-oss/qsVariable/tree/qlik-variable
+
+It is also supported by Qlik, so for bugs and suggestions you should contact Qlik.
+
+
 Allows the user to set the value of a variable.
 Four different ways to render:
 - Buttons: one button for each defined value
