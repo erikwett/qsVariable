@@ -10,7 +10,7 @@ https://github.com/qlik-oss/qsVariable/tree/qlik-variable
 
 It is also supported by Qlik, so for bugs and suggestions you should contact Qlik.
 
-
+## Features
 Allows the user to set the value of a variable.
 Four different ways to render:
 - Buttons: one button for each defined value
